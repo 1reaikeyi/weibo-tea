@@ -12,6 +12,7 @@ spring:
     url: jdbc:mysql://${weibo.datasource.host}:${weibo.datasource.port}/${weibo.datasource.database}
     username: ${weibo.datasource.userName}
     password: ${weibo.datasource.password}
+
   # redis配置
   data:
     redis:
@@ -21,12 +22,18 @@ spring:
       database: ${weibo.redis.database}
       client-type: lettuce
       timeout: 3000ms
+      # 哨兵模式
+      sentinel:
+        master: mymaster                   # 哨兵里配置的 master 名（需与 redis-sentinel.conf 中一致）
+        nodes: ${weibo.redis.sentinel.nodes}  # 3 个哨兵，逗号分隔，192.168.80.128:27000,192.168.80.129:27001,192.168.80.130:27002
+        password: ${weibo.redis.sentinel.password} 
       lettuce:
         pool:
           max-active: 10
           max-wait: 3000ms
           max-idle: 8
           min-idle: 2
+
   # 邮箱配置
   mail:
     host: smtp.qq.com
@@ -59,6 +66,7 @@ mybatis-plus:
 logging:
   level:
     sql: debug
+    io.lettuce.core: debug
 # alioss配置
 alioss:
   endpoint: ${weibo.endpoint}

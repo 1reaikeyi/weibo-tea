@@ -12,13 +12,13 @@ public class WebConfig implements WebMvcConfigurer {
     
     /**
      * 配置静态资源处理器
-     * 访问路径: http://localhost:8080/img/xxx
+     * 访问路径: http://localhost:8080/image/xxx
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //img
-        registry.addResourceHandler("/img/**")
-                .addResourceLocations("file:img/");
+        //image
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:ku/img/");
         // 保留默认映射
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
