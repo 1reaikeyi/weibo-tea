@@ -1,17 +1,16 @@
 <div align="center">
-  <h1>Weibo-record微博-记录</h1>
-    <h2>weibo-record：C2C经营模式，多个商家，多个买家。微博团购， 由管理员，用户，商家三方组成。<h2>
-    <h4>微博团购,带动实体经济。由Spring Boot + Vue 3的前后端分离设计，使用redis中间件+nginx作为gateway的分布式系统。<h4>
+  <h1>Weibo-tea微博-奶茶</h1>
+    <h2>Weibo-tea：C2C经营模式，多个商家，多个买家。奶茶团购，由管理员，用户，商家三方组成。<h2>
+    <h4>微博奶茶，由Spring Boot + Vue 3的前后端分离设计，使用redis中间件+nginx作为gateway的分布式系统。<h4>
     <h1>配置要求</h1>
     <img src="https://img.shields.io/badge/Java-17+ -6DB33F?style=flat-square&logo=java&logoColor=white" alt="Java" />
     <img src="https://img.shields.io/badge/Spring%20Boot-3.+ -6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot" />
     <img src="https://img.shields.io/badge/MySQL-8.0+ -6DB33F?style=flat-square&logo=mysql&logoColor=white" alt="mysql" />
     <img src="https://img.shields.io/badge/Redis-7.0+ -6DB33F?style=flat-square&logo=redis&logoColor=white" alt="redis" />
     <img src="https://img.shields.io/badge/Spring%20AI-1.1.+ -6DB33F?style=flat-square&logo=spring&logoColor=white" alt="spring ai" />
-    <img src="https://img.shields.io/badge/Vue-Node.js20.19.+ -6DB33F?style=flat-square&logo=vuedotjs&logoColor=white" alt="vue" />
+    <img src="https://img.shields.io/badge/Vue-Node.js20.+ -6DB33F?style=flat-square&logo=vuedotjs&logoColor=white" alt="vue" />
   </p>
 </div>
-<img src="说明/原型功能/封面.png" alt="封面" style="zoom:75%;" />
 
 # 启动步骤
 
@@ -23,17 +22,13 @@
 
 ```
 weibo-comment/
-├── backend-spring-weibo/                # 后端代码（Spring Boot 3 多模块）
+├── backend-spring-tea/                # 后端代码（Spring Boot 3 多模块）
 │   ├── common/                          # 公共模块
-│   │ 
 │   ├── model/                           # 数据传输对象
-│   │ 
 │   ├── mapper/                          # 数据访问层 	
-│   │ 
 │   ├── service/                         # 业务逻辑模块	
-│   │ 
 │   └── start/                           # 启动模块
-├── frontend-vue-weibo/                  # 前端代码(Vue 3)
+├── frontend-vue-tea/                  # 前端代码(Vue 3)
 ├── database-sql/                        # 数据库脚本目录
 │   ├── sql.txt                          # 数据库初始化SQL
 │   └── 数据库设计文档.md                  # 完整的数据库设计说明
@@ -45,59 +40,74 @@ weibo-comment/
     │  	    ├── 悲观锁集群不能一人一单.png      # 悲观锁方案测试截图
     │       ├── redis同步.png         # Redis同步测试截图
     │       ├── redis同步.txt         # Redis同步测试Slf4j日志
-    │       ├── redis异步.png         # Redis异步（队列）测试截图
-    │       ├── redis异步.txt         # Redis异步（队列）测试Slf4j日志
-    │       ├── stream异步.png        # Redis Stream异步测试截图
-    │       └── stream异步.txt        # Redis Stream异步测试Slf4j日志
-    ├── nginx配置.txt                    # nginx配置.txt  
+    │       ├── redis异步.png         # Redis异步（单体）测试截图
+    │       ├── redis异步.txt         # Redis异步（单体）测试Slf4j日志
+    │       ├── stream异步.png        # Redis Stream（分布式）异步测试截图
+    │       └── stream异步.txt        # Redis Stream（分布式）异步测试Slf4j日志
+    ├── nginx配置.txt                    # nginx配置.txt（说明：配置1111，2222，8080三个端口） 
     └── 高并发测试文档                     # 高并发测试文档
 ```
-#  能力全景
+# 前端功能演示
 
-| 能力域   | 能力说明                                                    |
-| -------- | ----------------------------------------------------------- |
-| 平台管理 | 员工管理、用户管理、权限拦截、登录校验、异常统一处理。      |
-|          |                                                             |
-|          |                                                             |
-|          |                                                             |
-|          |                                                             |
-|          |                                                             |
-|          |                                                             |
-|          |                                                             |
-| 缓存性能 | Redis + Spring Cache 用于高频访问数据缓存，减少数据库压力。 |
-| 可扩展性 | 模块化目录结构与分层设计，支持功能平滑扩展和二次开发。      |
+## 管理端
 
-# 详细能力介绍
+| 登录页面       | <img src="说明/原型功能/1.png" alt="登录页面" style="zoom:25%;" /> |
+| -------------- | ------------------------------------------------------------ |
+| 分类管理       | <img src="说明/原型功能/2.png" alt="登录页面" style="zoom:25%;" /> |
+| 文章列表       | <img src="说明/原型功能/3.png" alt="登录页面" style="zoom:25%;" /> |
+| 详情           | <img src="说明/原型功能/4.png" alt="登录页面" style="zoom:25%;" /> |
+| 邮箱发送验证码 | <img src="说明/原型功能/邮箱.png" alt="登录页面" style="zoom:50%;" /> |
+| 待开发         |                                                              |
 
-## 1. 管理后台能力
+## 用户端
 
-- 用户与员工管理：支持账号维护、状态启停、信息检索与运营分层管理。
-- 商品与分类管理：支持果蔬分类、商品信息、套餐组合、批量操作与业务配置。
-- 
-- 评价治理能力：支持评价列表、回复机制、评价统计看板。
+待开发
 
-## 2. 用户端能力
+------
 
-- 
-- 商品消费：支持果蔬详情查看、套餐详情查看、规格组合与加入购物车。
-- 交易转化：支持地址管理、优惠券抵扣、订单提交与支付流程承接。
-- 
-- 销量排行：支持日榜、周榜、月榜多维统计浏览，提升选购效率。
 
-## 3. 数据分析能力
-
-- 管理端数据大屏：展示用户数、订单数、营业额、排行等核心经营指标。
-- 评价统计：支持评价数量、评分分布、回复状态等可视化分析。
-- 
-
-## 4. 工程与技术能力
-
-- 
-- 统一响应与异常治理：提升接口一致性与排障效率。
-- 
-- 模块化代码组织：便于新增功能、替换组件和持续迭代。
 
 # 后端说明
+
+### 组件：Redis分布式ID生成器（RedisID）
+
+```java
+@Component
+public class RedisID {
+    // 基准时间：2020-01-01 00:00:00 UTC
+    private final static long BEGIN_TIME = 1577836800L;
+    // 32位序号最大值
+    private static final long MAX_SEQ = 0xFFFFFFFFL;
+
+    public long createId(String prefix) {
+        long nowSeconds = ZonedDateTime.now(ZoneOffset.UTC).toEpochSecond();
+        long timestamp = nowSeconds - BEGIN_TIME;
+        
+        String date = ZonedDateTime.now(ZoneOffset.UTC)
+            .format(DateTimeFormatter.ofPattern("yyyy:MM:dd"));
+        String key = "icr:" + prefix + ":" + date;
+        long count = stringRedisTemplate.opsForValue().increment(key);
+        
+        return timestamp << 32 | count;
+    }
+}
+```
+
+Q：为什么不用UUID？
+
+> A：UUID是随机字符串，无序，作为数据库主键会导致索引分裂，影响性能。而且UUID太长（36位），存储和传输成本高。
+
+Q：为什么不用数据库自增ID？
+
+> A：数据库自增ID在分布式环境下需要额外处理（比如分库分表），而且生成ID需要访问数据库，性能不如Redis。
+
+Q：ID结构为什么是 1位符号位+时间戳(31位) + 序号(32位)？
+
+> A：0作为符号位，正数自增，31位时间戳可以表示约68年（2^31秒 ≈ 68年），从2020年开始够用。32位序号可以表示约42亿，足够单日并发使用
+
+---
+
+
 
 ## 一、用户管理模块
 
@@ -514,7 +524,7 @@ response.setHeader("Content-Disposition", "attachment;filename=" +
 
 ---
 
-## 七、优惠券与秒杀模块
+## 七、优惠券使用的并发模块
 
 ### 需求阶段
 
@@ -532,7 +542,7 @@ response.setHeader("Content-Disposition", "attachment;filename=" +
 用户请求 → 校验秒杀活动 → 生成订单ID → 直接调用secondKill() → 扣库存+保存订单 → 返回结果
 ```
 
-#### 异步单机版本流程
+#### 异步单机流程
 
 ```
 用户请求 → 校验秒杀活动 → Lua脚本校验 → 放入ArrayBlockingQueue → 返回订单ID
@@ -540,7 +550,7 @@ response.setHeader("Content-Disposition", "attachment;filename=" +
                                         后台线程 take() → RedisLock → paySuccess() → 扣库存+保存订单
 ```
 
-#### 异步分布式版本流程
+#### 异步分布式流程
 
 ```
 用户请求 → 校验秒杀活动 → Lua脚本校验（自动XADD到Stream）→ 返回订单ID
@@ -624,7 +634,7 @@ redis.call('sadd', orderKey, userId)
 return 0
 ```
 
-#### VoucherSeckillController（同步版本）
+#### VoucherSeckillController（同步）
 
 ```java
 // VoucherSeckillController.java
@@ -652,7 +662,7 @@ public Result redisLock(@RequestBody VoucherOrder voucherOrder) {
 
 ---
 
-####  VoucherController（异步版本 - 单机版本流程）
+####  VoucherController（异步 - 单体）
 
 ```java
 // VoucherController.java - 下单接口
@@ -726,7 +736,7 @@ private class HandleOrderTaskByList implements Runnable {
 
 ---
 
-#### VoucherOrderController（异步版本 - Redis Stream）
+#### VoucherOrderController（异步 - Redis Stream分布式）
 
 - 使用 Lua 脚本在 Redis 中完成库存校验和扣减
 - 使用 **Redis Stream** 作为消息队列，支持消息持久化
@@ -834,7 +844,7 @@ Q: 为什么从内存队列演进到Redis Stream？
 
 | 维度 | VoucherSeckillController | VoucherController | VoucherOrderController |
 | :--- | :--- | :--- | :--- |
-| **处理方式** | 同步 | 异步（jvm队列） | 异步（Redis Stream） |
+| **处理方式** | 同步 | 异步 | 异步（Redis Stream） |
 | **队列类型** | 无 | ArrayBlockingQueue | Redis Stream |
 | **分布式锁** | Redisson | 自定义RedisLock | Redisson |
 | **消息持久化** | 无 | 无 | 有 |
@@ -916,7 +926,7 @@ public void init() {
         stringRedisTemplate.opsForStream().createGroup(STREAM_KEY, "g1");
         log.info("Redis Stream消费组创建成功");
     } catch (Exception e) {
-         //重复测试group会重复创建，有异常
+         //重复的测试group会重复创建，有异常
         log.info("消费组已存在，跳过创建");
     }
     CODE_EXECUTOR.submit(new HandleCodeTask());
@@ -1144,58 +1154,4 @@ if (CollectionUtil.isEmpty(results)){
 ```
 
 ---
-
-# 核心组件设计
-
-### 1. Redis分布式ID生成器（RedisID）
-
-```java
-@Component
-public class RedisID {
-    // 基准时间：2020-01-01 00:00:00 UTC
-    private final static long BEGIN_TIME = 1577836800L;
-    // 32位序号最大值
-    private static final long MAX_SEQ = 0xFFFFFFFFL;
-
-    public long createId(String prefix) {
-        long nowSeconds = ZonedDateTime.now(ZoneOffset.UTC).toEpochSecond();
-        long timestamp = nowSeconds - BEGIN_TIME;
-        
-        String date = ZonedDateTime.now(ZoneOffset.UTC)
-            .format(DateTimeFormatter.ofPattern("yyyy:MM:dd"));
-        String key = "icr:" + prefix + ":" + date;
-        long count = stringRedisTemplate.opsForValue().increment(key);
-        
-        return timestamp << 32 | count;
-    }
-}
-```
-
-Q：为什么不用UUID？
-
-> A：UUID是随机字符串，无序，作为数据库主键会导致索引分裂，影响性能。而且UUID太长（36位），存储和传输成本高。
-
-Q：为什么不用数据库自增ID？
-
-> A：数据库自增ID在分布式环境下需要额外处理（比如分库分表），而且生成ID需要访问数据库，性能不如Redis。
-
-Q：ID结构为什么是 1位符号位+时间戳(31位) + 序号(32位)？
-
-> A：0作为符号位，正数自增，31位时间戳可以表示约68年（2^31秒 ≈ 68年），从2020年开始够用。32位序号可以表示约42亿，足够单日并发使用
-
----
-
-# 前端功能演示
-
-| 登录页面       | <img src="说明/原型功能/1.png" alt="登录页面" style="zoom:25%;" /> |
-| -------------- | ------------------------------------------------------------ |
-| 分类管理       | <img src="说明/原型功能/2.png" alt="登录页面" style="zoom:25%;" /> |
-| 文章列表       | <img src="说明/原型功能/3.png" alt="登录页面" style="zoom:25%;" /> |
-| hot查看        | <img src="说明/原型功能/4.png" alt="登录页面" style="zoom:25%;" /> |
-| 用户设置       | <img src="说明/原型功能/5.png" alt="登录页面" style="zoom:25%;" /> |
-| 用户信息       | <img src="说明/原型功能/6.png" alt="登录页面" style="zoom:25%;" /> |
-| 用户密码       | <img src="说明/原型功能/7.png" alt="登录页面" style="zoom:25%;" /> |
-| 邮箱发送验证码 | <img src="说明/原型功能/邮箱.png" alt="登录页面" style="zoom:50%;" /> |
-
-------
 
