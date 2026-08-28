@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>backend-spring-weibo</artifactId>
+    <artifactId>spring-tea</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>

@@ -17,7 +17,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="backend-spring-weibo" options="" />
+      <module name="backend-spring-tea" options="" />
       <module name="common" options="-parameters" />
       <module name="mapper" options="-parameters" />
       <module name="model" options="-parameters" />
