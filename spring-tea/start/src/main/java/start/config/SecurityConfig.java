@@ -1,7 +1,8 @@
-package framework.config;
+package start.config;
 
+import com.branch.properties.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import framework.properties.JwtProperties;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +25,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import framework.filter.AuthenticationRequestFilter;
-import framework.filter.UserRefreshRequestFilter;
+import start.filter.AuthenticationRequestFilter;
+import start.filter.UserRefreshRequestFilter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,15 +44,12 @@ import java.util.Map;
 @EnableMethodSecurity
 @Slf4j
 public class SecurityConfig {
-    @Autowired
-    private JwtProperties jwtProperties;
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -82,11 +80,9 @@ public class SecurityConfig {
                         .authenticationEntryPoint(authenticationEntryPoint())
                         .accessDeniedHandler(accessDeniedHandler())
                 )
-                // user 刷新过滤器（处理 user token，其他 token 放行）
+                // user 刷新过滤器
                 .addFilterBefore(userRefreshRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                // emp 刷新过滤器（处理 emp token，其他 token 放行）
-                .addFilterBefore(employeeRefreshRequestFilter, UsernamePasswordAuthenticationFilter.class)
-                // 认证拦截过滤器（在 RefreshFilter 之后）
+                // 认证拦截过滤器
                 .addFilterBefore(authenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

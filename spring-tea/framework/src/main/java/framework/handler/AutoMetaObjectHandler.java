@@ -1,7 +1,7 @@
 package framework.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import start.security.SecurityContextParam;
+
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @Component
 public class AutoMetaObjectHandler implements MetaObjectHandler {
     private Long getUserId(){
-        Long userId = SecurityContextParam.getCurrentUserId();
+//        Long userId = SecurityContextParam.getCurrentUserId();
+        Long userId = null;
         return userId != null ? userId : 0L;
     }
 
