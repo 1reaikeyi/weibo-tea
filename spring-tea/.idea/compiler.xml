@@ -8,20 +8,34 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="start" />
-        <module name="model" />
-        <module name="mapper" />
+        <module name="branch-system" />
+        <module name="framework" />
         <module name="common" />
-        <module name="service" />
+        <module name="branch-user" />
+        <module name="branch-file" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="branch-blog" target="17" />
+      <module name="branch-order" target="17" />
+      <module name="branch-shop" target="17" />
+      <module name="mapper" target="17" />
+      <module name="model" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="backend-spring-tea" options="" />
+      <module name="branch-blog" options="-parameters" />
+      <module name="branch-file" options="-parameters" />
+      <module name="branch-order" options="-parameters" />
+      <module name="branch-shop" options="-parameters" />
+      <module name="branch-system" options="-parameters" />
+      <module name="branch-user" options="-parameters" />
       <module name="common" options="-parameters" />
+      <module name="framework" options="-parameters" />
       <module name="mapper" options="-parameters" />
       <module name="model" options="-parameters" />
-      <module name="service" options="-parameters" />
       <module name="start" options="-parameters" />
     </option>
   </component>

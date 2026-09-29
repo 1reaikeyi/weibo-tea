@@ -14,10 +14,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>common</module>
-        <module>model</module>
-        <module>mapper</module>
-        <module>service</module>
+
         <module>start</module>
+        <module>framework</module>
+        <module>branch-system</module>
+        <module>branch-user</module>
+        <module>branch-file</module>
+        <!--        <module>branch-blog</module>-->
+<!--        <module>branch-shop</module>-->
+<!--        <module>branch-order</module>-->
     </modules>
 
     <properties>
@@ -30,22 +35,22 @@
     <dependencyManagement>
         <dependencies>
             <!-- Lombok 由 spring-boot-starter-parent 管理版本-->
-            <!--web-->
             <!-- web 由 spring-boot-starter-parent 管理版本-->
-            <!-- 校验参数 -->
             <!-- validation 由 spring-boot-starter-parent 管理版本-->
-            <!--aop-->
             <!-- aop 由 spring-boot-starter-parent 管理版本-->
-            <!--test-->
             <!-- test 由 spring-boot-starter-parent 管理版本-->
-            <!-- email-->
             <!-- email 由 spring-boot-starter-parent 管理版本-->
-            <!-- security-->
             <!-- security 由 spring-boot-starter-parent 管理版本-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>5.8.36</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>cn.hutool</groupId>
+                        <artifactId>hutool-extra</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- JJWT 核心 API -->
@@ -73,14 +78,10 @@
             <!--redisson锁-->
             <dependency>
                 <groupId>org.redisson</groupId>
-                <artifactId>redisson</artifactId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>3.52.0</version>
             </dependency>
-            <!--        <dependency>-->
-            <!--            <groupId>org.redisson</groupId>-->
-            <!--            <artifactId>redisson-spring-boot-starter</artifactId>-->
-            <!--            <version>3.52.0</version>-->
-            <!--        </dependency>-->
+
             <!--数据库-->
             <dependency>
                 <groupId>com.mysql</groupId>
@@ -110,8 +111,6 @@
                 <artifactId>httpclient</artifactId>
                 <version>4.5.14</version>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 

@@ -1,3 +1,83 @@
+<template>
+  <el-container class="layout-container">
+    <el-aside width="200px">
+      <div class="el-aside__logo"></div>
+      <el-menu active-text-color="#ffd04b" background-color="#232323" :default-active="$route.path" text-color="#fff" router>
+
+        <el-menu-item index="/article/category">
+          <el-icon><Management /></el-icon>
+          <span>分类</span>
+        </el-menu-item>
+        <el-menu-item index="/article/get">
+          <el-icon><Promotion /></el-icon>
+          <span>新品文章</span>
+        </el-menu-item>
+        <el-menu-item index="/article/edit">
+          <el-icon><Promotion /></el-icon>
+          <span>博客文章</span>
+        </el-menu-item>
+        <el-sub-menu index="/user">
+          <template #title>
+            <el-icon><UserFilled /></el-icon>
+            <span>个人中心</span>
+          </template>
+          <el-menu-item index="/user/profile">
+            <el-icon><User /></el-icon>
+            <span>基本资料</span>
+          </el-menu-item>
+          <el-menu-item index="/user/avatar">
+            <el-icon><Crop /></el-icon>
+            <span>更换头像</span>
+          </el-menu-item>
+          <el-menu-item index="/user/password">
+            <el-icon><EditPen /></el-icon>
+            <span>重置密码</span>
+          </el-menu-item>
+        </el-sub-menu>
+      </el-menu>
+    </el-aside>
+
+    <el-container>
+      <el-header>
+        <!-- header外层flex，实现左右分离 -->
+        <div class="header-container">
+          <div class="header-left"></div>
+          <!-- 右侧：头像下拉 + 横向菜单 -->
+          <div class="header-right">
+            <el-dropdown placement="bottom-end" @command="handleCommand">
+              <span class="avatar-wrap">
+                <!-- 头像 src：后端返回的是文件名，需拼接 /api/local?fileName= 完整 URL；为空时用本地默认头像兜底 -->
+                <el-avatar :src="avatarUrl" :size="50" />
+                <el-icon><CaretBottom /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="avatar">更换头像</el-dropdown-item>
+                  <el-dropdown-item command="password">重置密码</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+
+            <el-menu
+                mode="horizontal"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b"
+                :default-active="activeIndex"
+                @select="handleSelect"
+            >
+              <el-menu-item index="1">首页</el-menu-item>
+              <el-menu-item index="2">用户信息</el-menu-item>
+              <el-menu-item index="3">退出登录</el-menu-item>
+            </el-menu>
+          </div>
+        </div>
+      </el-header>
+      <el-main><router-view/></el-main>
+      <el-footer>tea</el-footer>
+    </el-container>
+  </el-container>
+</template>
 <script setup>
 import {
   Management,
@@ -24,65 +104,6 @@ const handleCommand = async (key) => {
   router.push(`/user/${key}`)
 }
 </script>
-
-<template>
-  <el-container class="layout-container">
-    <el-aside width="200px">
-      <div class="el-aside__logo"></div>
-      <el-menu active-text-color="#ffd04b" background-color="#232323" :default-active="$route.path" text-color="#fff" router>
-        <el-menu-item index="/article/category"><el-icon><Management /></el-icon><span>目录查看</span></el-menu-item>
-        <el-menu-item index="/article/get"><el-icon><Promotion /></el-icon><span>新闻查看</span></el-menu-item>
-        <el-menu-item index="/article/edit"><el-icon><Promotion /></el-icon><span>文章编辑</span></el-menu-item>
-        <el-sub-menu index="/user">
-          <!-- 多级菜单的标题 - 具名插槽 title -->
-          <template #title>
-            <el-icon><UserFilled /></el-icon>
-            <span>个人中心</span>
-          </template>
-
-          <!-- 展开的内容 - 默认插槽 -->
-          <el-menu-item index="/user/profile">
-            <el-icon><User /></el-icon>
-            <span>基本资料</span>
-          </el-menu-item>
-          <el-menu-item index="/user/avatar">
-            <el-icon><Crop /></el-icon>
-            <span>更换头像</span>
-          </el-menu-item>
-          <el-menu-item index="/user/password">
-            <el-icon><EditPen /></el-icon>
-            <span>重置密码</span>
-          </el-menu-item>
-        </el-sub-menu>
-      </el-menu>
-    </el-aside>
-
-    <el-container>
-      <el-header>
-        <div>weibo评论==>当前用户呢称是:<strong>{{ userStore.user?.nickName || userStore.user?.userName || '用户' }}</strong></div>
-        <el-dropdown placement="bottom-end" @command="handleCommand">
-          <span class="el-dropdown__box">
-            <el-avatar :src="userStore.user?.userPic || avatar" />
-            <el-icon><CaretBottom /></el-icon>
-          </span>
-
-          <!-- 折叠的下拉部分 -->
-          <template #dropdown>
-            <el-dropdown-menu><el-dropdown-item command="profile" :icon="User">基本资料</el-dropdown-item>
-              <el-dropdown-item command="avatar" :icon="Crop">更换头像</el-dropdown-item>
-              <el-dropdown-item command="password" :icon="EditPen">重置密码</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </el-header>
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-      <el-footer></el-footer>
-    </el-container>
-  </el-container>
-</template>
-
 <style lang="scss" scoped>
 .layout-container {
   height: 100vh;

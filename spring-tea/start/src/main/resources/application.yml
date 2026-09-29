@@ -12,7 +12,6 @@ spring:
     url: jdbc:mysql://${weibo.datasource.host}:${weibo.datasource.port}/${weibo.datasource.database}
     username: ${weibo.datasource.userName}
     password: ${weibo.datasource.password}
-
   # redis配置
   data:
     redis:
@@ -20,19 +19,30 @@ spring:
       port: ${weibo.redis.port}
       password: ${weibo.redis.password}
       database: ${weibo.redis.database}
-      client-type: lettuce
       timeout: 3000ms
-      # 哨兵模式
-      sentinel:
-        master: mymaster                   # 哨兵里配置的 master 名（需与 redis-sentinel.conf 中一致）
-        nodes: ${weibo.redis.sentinel.nodes}  # 3 个哨兵，逗号分隔，192.168.80.128:27000,192.168.80.129:27001,192.168.80.130:27002
-        password: ${weibo.redis.sentinel.password} 
-      lettuce:
-        pool:
-          max-active: 10
-          max-wait: 3000ms
-          max-idle: 8
-          min-idle: 2
+      redisson:
+        config: |
+          singleServerConfig:
+            # Redis 连接地址（必须带 redis:// 协议前缀）
+            address: "redis://${weibo.redis.host}:${weibo.redis.port}"
+            # 数据库索引
+            database: ${weibo.redis.database}
+            # 访问密码
+            password: ${weibo.redis.password}
+            # 连接池大小
+            connectionPoolSize: 10
+            # 最小空闲连接数
+            connectionMinimumIdleSize: 2
+            # 连接空闲超时（毫秒），超时后关闭空闲连接
+            idleConnectionTimeout: 10000
+            # 连接建立超时（毫秒）
+            connectTimeout: 10000
+            # 命令执行超时（毫秒）
+            timeout: 3000
+            # 命令失败重试次数
+            retryAttempts: 3
+            # 命令失败重试间隔（毫秒）
+            retryInterval: 1500
 
   # 邮箱配置
   mail:
@@ -49,10 +59,6 @@ spring:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
             port: 465
-  # 配置文件,导入开发环境的配置文件
-  config:
-    import:
-      classpath: application-dev.yml
   # servlet配置
   servlet:
     multipart:
@@ -63,6 +69,11 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+  global-config:
+    # 主键策略
+    db-config:
+      id-type: auto
+      update-strategy: not_null
 logging:
   level:
     sql: debug

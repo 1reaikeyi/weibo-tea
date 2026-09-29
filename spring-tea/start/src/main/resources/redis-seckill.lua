@@ -1,5 +1,5 @@
--- 优惠券id对应的库存key: voucherSeckill:stock:voucherId
--- 订单key使用set存储已下单用户: voucherSeckill:order:voucherId
+-- 优惠券id对应的库存key: voucherSecond:stock:voucherId
+-- 订单key使用set存储已下单用户: voucherSecond:order:voucherId
 
 -- 获取参数：优惠券id
 local voucherId = ARGV[1]
@@ -9,8 +9,8 @@ local userId = ARGV[2]
 local orderId = ARGV[3]
 
 -- 定义key
-local stockKey = "voucherSeckill:stock:" .. voucherId
-local orderKey = "voucherSeckill:order:" .. voucherId
+local stockKey = "voucherSecond:stock:" .. voucherId
+local orderKey = "voucherSecond:order:" .. voucherId
 
 -- 1. 判断库存是否充足
 if(tonumber(redis.call('get',stockKey)) <= 0) then

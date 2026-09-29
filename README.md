@@ -1,7 +1,6 @@
 <div align="center">
   <h1>Weibo-tea微博-奶茶</h1>
-    <h2>Weibo-tea：C2C经营模式，多个商家，多个买家。奶茶团购，由管理员，用户，商家三方组成。<h2>
-    <h4>微博奶茶，由Spring Boot + Vue 3的前后端分离设计，使用redis中间件+nginx作为gateway的分布式系统。<h4>
+    <h5>Weibo-tea：C2C经营模式，多个商家，多个买家。奶茶团购，由管理员，用户，商家三方组成。微博奶茶，由Spring Boot + Vue 3的前后端分离设计，使用redis中间件+nginx分布式系统。<h5>
     <h1>配置要求</h1>
     <img src="https://img.shields.io/badge/Java-17+ -6DB33F?style=flat-square&logo=java&logoColor=white" alt="Java" />
     <img src="https://img.shields.io/badge/Spring%20Boot-3.+ -6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot" />
@@ -9,63 +8,24 @@
     <img src="https://img.shields.io/badge/Redis-7.0+ -6DB33F?style=flat-square&logo=redis&logoColor=white" alt="redis" />
     <img src="https://img.shields.io/badge/Spring%20AI-1.1.+ -6DB33F?style=flat-square&logo=spring&logoColor=white" alt="spring ai" />
     <img src="https://img.shields.io/badge/Vue-Node.js20.+ -6DB33F?style=flat-square&logo=vuedotjs&logoColor=white" alt="vue" />
-  </p>
 </div>
 
-# 启动步骤
 
-1. 创建数据库并导入 `sql/` 目录脚本。
-2. 修改 `start/src/main/resources/application-dev.yml` 中数据库与 Redis 配置。
-3. `npm run dev ` 前端启动服务。
+## 项目结构
 
-# 项目结构
+weibo-tea/说明/wiki.md
 
-```
-weibo/
-├── spring-tea/                # 后端代码（Spring Boot 3 多模块）
-│   ├── common/                          # 公共模块
-│   ├── model/                           # 数据传输对象
-│   ├── mapper/                          # 数据访问层 	
-│   ├── service/                         # 业务逻辑模块	
-│   └── start/                           # 启动模块
-├── vue-tea/                  # 前端代码(Vue 3)
-├── database-sql/                        # 数据库脚本目录
-│   ├── sql.txt                          # 数据库初始化SQL
-│   └── 数据库设计文档.md                  # 完整的数据库设计说明
-└── 说明/                                 # 项目说明文档
-    ├── 原型功能/                         # 前端原型截图
-    ├── 并发测试结果/                      # 秒杀并发测试结果
-    │   	├── 乐观锁解决超卖.png            	# 乐观锁方案测试截图
-    │   	├── 分布式锁解决集群一人多单.png     # 分布式锁方案测试截图
-    │  	    ├── 悲观锁集群不能一人一单.png      # 悲观锁方案测试截图
-    │       ├── redis同步.png         # Redis同步测试截图
-    │       ├── redis同步.txt         # Redis同步测试Slf4j日志
-    │       ├── redis异步.png         # Redis异步（单体）测试截图
-    │       ├── redis异步.txt         # Redis异步（单体）测试Slf4j日志
-    │       ├── stream异步.png        # Redis Stream（分布式）异步测试截图
-    │       └── stream异步.txt        # Redis Stream（分布式）异步测试Slf4j日志
-    ├── nginx配置.txt                    # nginx配置.txt（说明：配置1111，2222，8080三个端口） 
-    └── 高并发测试文档                     # 高并发测试文档
-```
-# 前端功能演示
+## 接口文档
+
+
+
+# 前端功能
 
 ## 管理端
 
-| 登录页面       | <img src="说明/原型功能/1.png" alt="登录页面" style="zoom:25%;" /> |
-| -------------- | ------------------------------------------------------------ |
-| 分类管理       | <img src="说明/原型功能/2.png" alt="登录页面" style="zoom:25%;" /> |
-| 文章列表       | <img src="说明/原型功能/3.png" alt="登录页面" style="zoom:25%;" /> |
-| 详情           | <img src="说明/原型功能/4.png" alt="登录页面" style="zoom:25%;" /> |
-| 邮箱发送验证码 | <img src="说明/原型功能/邮箱.png" alt="登录页面" style="zoom:50%;" /> |
-| 待开发         |                                                              |
-
 ## 用户端
 
-待开发
-
 ------
-
-
 
 # 后端说明
 
@@ -583,7 +543,7 @@ Q：补签接口未校验日期是否合法（如日期格式错误、日期超�
 
 ---
 
-## 十一、店铺管理模块
+## 十一、店铺搜索模块
 
 ### **策略流程图**
 
