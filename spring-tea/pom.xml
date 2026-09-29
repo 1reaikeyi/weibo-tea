@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.8</version>
+        <version>3.5.9</version>
         <relativePath/>
     </parent>
     <groupId>org.example</groupId>
@@ -18,11 +18,11 @@
         <module>start</module>
         <module>framework</module>
         <module>branch-system</module>
-        <module>branch-user</module>
+        <module>branch-manage</module>
         <module>branch-file</module>
-        <!--        <module>branch-blog</module>-->
-<!--        <module>branch-shop</module>-->
-<!--        <module>branch-order</module>-->
+<!--        <module>branch-blog</module>-->
+<!--        <module>branch-mall</module>-->
+<!--        <module>branch-second</module>-->
     </modules>
 
     <properties>

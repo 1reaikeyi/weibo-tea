@@ -7,5 +7,5 @@ public class RedisPrefixConstant {
     public static final String LOGIN_CODE = "weibo:login:code:";
     public static final String LOGIN_CODE_STREAM = "weibo:login:code:stream:";
 
-    public static final String SIGN = "sign:";
+    public static final String SIGN_DAY = "sign:";
 }

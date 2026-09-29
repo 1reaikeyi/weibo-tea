@@ -36,8 +36,6 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
         return path.equals("/user/register")
                 || path.equals("/user/login")
                 || path.equals("/user/logout")
-                || path.equals("/employee/login")
-                || path.equals("/employee/logout")
                 || path.equals("/login/code")
                 || path.equals("/login/byEmail")
                 || path.startsWith("/img/");

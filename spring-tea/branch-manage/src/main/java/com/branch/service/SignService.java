@@ -24,13 +24,13 @@ public interface SignService extends IService<Sign> {
      *
      * @return 结果描述；无数据时返回数字 0
      */
-    Object countDaySign();
+    Object countOfMonth();
 
     /**
      * 统计指定月份的签到情况，并落库保存到 Sign 表
      *
      * @return 保存的 Sign 记录；无数据时返回数字 0
      */
-    Object countMonthSign(TimeDTO time);
+    Object countOfTime(TimeDTO time);
 
 }
