@@ -1,5 +1,6 @@
 package start.filter;
 
+import com.branch.service.LoginUserService;
 import com.branch.properties.JwtProperties;
 import com.branch.util.JwtUtil;
 import common.constant.JwtConstant;
@@ -14,15 +15,13 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -37,10 +36,14 @@ public class UserRefreshRequestFilter extends OncePerRequestFilter {
 
     private final JwtProperties jwtProperties;
     private final StringRedisTemplate stringRedisTemplate;
+    private final LoginUserService loginUserService;
 
-    public UserRefreshRequestFilter(JwtProperties jwtProperties, StringRedisTemplate stringRedisTemplate) {
+    public UserRefreshRequestFilter(JwtProperties jwtProperties,
+                                    StringRedisTemplate stringRedisTemplate,
+                                    LoginUserService loginUserService) {
         this.jwtProperties = jwtProperties;
         this.stringRedisTemplate = stringRedisTemplate;
+        this.loginUserService = loginUserService;
     }
 
     private String extractToken(HttpServletRequest request) {
@@ -72,22 +75,23 @@ public class UserRefreshRequestFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Long userId = Long.parseLong(claims.get(JwtConstant.USER_ID).toString());
-            String standardToken = stringRedisTemplate.opsForValue().get(WEIBO_AUTHHEADER + userId);
+            Long number = Long.parseLong(claims.get(JwtConstant.USER_ID).toString());
+            String username = claims.get(JwtConstant.USER_NAME).toString();
+            String standardToken = stringRedisTemplate.opsForValue().get(WEIBO_AUTHHEADER + number);
 
             if (!token.equals(standardToken)) {
-                log.debug("user Token 验证失败，可能已注销或被篡改, 用户ID: {}", userId);
+                log.debug("user Token 验证失败，可能已注销或被篡改, 用户ID: {}", number);
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
 
+            UserDetails userDetails = loginUserService.loadUserByUsername(username);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                   null,
-                    token);
+                   userDetails,null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 滑动过期
-            stringRedisTemplate.expire(WEIBO_AUTHHEADER + userId,
+            stringRedisTemplate.expire(WEIBO_AUTHHEADER + number,
                     jwtProperties.getTtlMillis(), TimeUnit.SECONDS);
 
             filterChain.doFilter(request, response);

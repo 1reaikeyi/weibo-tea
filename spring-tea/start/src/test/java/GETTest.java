@@ -1,5 +1,6 @@
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.BooleanUtil;
+import framework.security.SecurityContextParam;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -31,5 +32,10 @@ public class GETTest {
         LocalDate localDate = LocalDate.parse(year+"-"+month+"-"+"01", formatter);
         int day = localDate.lengthOfMonth();
         System.out.println("days = " + day);
+    }
+    @Test
+    public void testRedis(){
+        System.out.println(SecurityContextParam.getCurrentUserId());
+        System.out.println(SecurityContextParam.getCurrentUsername());
     }
 }

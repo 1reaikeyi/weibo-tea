@@ -1,5 +1,6 @@
-package com.branch.domain.bo;
+package com.branch.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.branch.domain.entity.Permission;
 import com.branch.domain.entity.Role;
@@ -13,6 +14,8 @@ import com.branch.mapper.UserMapper;
 import com.branch.mapper.UserRoleMapper;
 import common.constant.ErrorConstant;
 import common.constant.StatusConstant;
+import framework.bo.UserBO;
+import framework.security.LoginUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -79,7 +82,8 @@ public class LoginUserService implements UserDetailsService {
 
         // 5. 封装 LoginUserDetails 返回
         LoginUserDetails loginUser = new LoginUserDetails();
-        loginUser.setUser(dbUser);
+        UserBO userBO = BeanUtil.toBean(loginUser, UserBO.class);
+        loginUser.setUserBO(userBO);
         loginUser.setRoles(roles);
         loginUser.setPermissions(permissions);
         return loginUser;
@@ -87,7 +91,6 @@ public class LoginUserService implements UserDetailsService {
 
     /**
      * 加载用户的角色编码集合
-     * 链路：user_role → role，提取 role_code
      */
     private Set<String> loadRoles(Long userId) {
         List<UserRole> userRoles = userRoleMapper.selectList(
@@ -110,7 +113,6 @@ public class LoginUserService implements UserDetailsService {
 
     /**
      * 加载用户的权限标识集合
-     * 链路：超级管理员直接授予 *:*:*；普通用户走 role_permission → permission，提取 permission_code
      */
     private Set<String> loadPermissions(Long userId, Set<String> roles) {
         // 超管：userId == 1 直接拥有全部权限（参照若依约定，与 LoginUserDetails.isAdmin 保持一致）

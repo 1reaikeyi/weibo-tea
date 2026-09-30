@@ -1,7 +1,8 @@
-package com.branch.domain.bo;
+package framework.security;
 
-import com.branch.domain.entity.User;
+
 import common.constant.StatusConstant;
+import framework.bo.UserBO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class LoginUserDetails implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 用户信息 */
-    private User user;
+    private UserBO userBO;
 
     /** 权限集合：权限标识 permission_code */
     private Set<String> permissions;
@@ -62,7 +62,7 @@ public class LoginUserDetails implements UserDetails, Serializable {
      */
     @Override
     public String getPassword() {
-        return user == null ? null : user.getPassword();
+        return userBO == null ? null : userBO.getPassword();
     }
 
     /**
@@ -70,7 +70,7 @@ public class LoginUserDetails implements UserDetails, Serializable {
      */
     @Override
     public String getUsername() {
-        return user == null ? null : user.getUsername();
+        return userBO == null ? null : userBO.getUsername();
     }
 
     /**
@@ -102,7 +102,7 @@ public class LoginUserDetails implements UserDetails, Serializable {
      */
     @Override
     public boolean isEnabled() {
-        return user != null && StatusConstant.ENABLE.equals(user.getStatus());
+        return userBO != null && StatusConstant.ENABLE.equals(userBO.getStatus());
     }
 
 }

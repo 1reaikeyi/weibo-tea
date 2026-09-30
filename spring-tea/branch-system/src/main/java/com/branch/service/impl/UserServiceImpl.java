@@ -3,7 +3,8 @@ package com.branch.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.branch.domain.bo.LoginUserDetails;
+import framework.bo.UserBO;
+import framework.security.LoginUserDetails;
 import com.branch.domain.dto.LoginDTO;
 import common.constant.JwtConstant;
 import common.constant.RoleConstant;
@@ -30,7 +31,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -120,22 +120,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         LoginUserDetails loginUser = (LoginUserDetails) authentication.getPrincipal();
-        User dbUser = loginUser.getUser();
-        Set<String> roles = loginUser.getRoles();
+        UserBO userBO = loginUser.getUserBO();
+        User dbUser = BeanUtil.toBean(userBO, User.class);
 
         Map<String, Object> claims = new HashMap<>();
         Long userId = dbUser.getId();
-        claims.put(JwtConstant.TYPE, roles);
         claims.put(JwtConstant.USER_ID, userId.toString());
         claims.put(JwtConstant.USER_NAME, dbUser.getUsername());
         String token = JwtUtil.createJWT(jwtProperties.getSecretKey(), jwtProperties.getTtlMillis(), claims);
 
         stringRedisTemplate.opsForValue().set(RedisPrefixConstant.WEIBO_AUTHHEADER + userId, token,
                 jwtProperties.getTtlMillis(), TimeUnit.SECONDS);
-        User update = new User();
-        update.setId(userId);
-        update.setLastLoginTime(LocalDateTime.now());
-        this.updateById(update);
+
+        dbUser.setLastLoginTime(LocalDateTime.now());
+        this.updateById(dbUser);
 
         log.info("用户 {} 登录成功，userId={}", username, userId);
         return token;

@@ -1,10 +1,11 @@
 package start.config;
 
+import com.branch.service.LoginUserService;
+import framework.security.LoginUserDetails;
 import com.branch.properties.JwtProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -60,8 +61,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
                                            JwtProperties jwtProperties,
-                                           StringRedisTemplate stringRedisTemplate) throws Exception {
-        UserRefreshRequestFilter userRefreshRequestFilter = new UserRefreshRequestFilter(jwtProperties, stringRedisTemplate);
+                                           StringRedisTemplate stringRedisTemplate,
+                                           LoginUserService loginUserService) throws Exception {
+        UserRefreshRequestFilter userRefreshRequestFilter =
+                new UserRefreshRequestFilter(jwtProperties, stringRedisTemplate,loginUserService);
         AuthenticationRequestFilter authenticationRequestFilter = new AuthenticationRequestFilter();
 
         http.csrf(AbstractHttpConfigurer::disable)
